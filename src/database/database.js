@@ -10,7 +10,7 @@ const connection = new Sequelize(process.env.DB_NAME, process.env.DB_USER, proce
 const Product = ProductModel(connection, Sequelize);
 
 connection.sync({force: false}).then( () =>{
-    console.log('Product model sync with the database')
+    console.log('Models sync with the database')
 });
 
 module.exports = {

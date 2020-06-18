@@ -33,5 +33,5 @@ app.use(multer({storage}).array('images', 5));
 app.use('/api', apiRouter)
 
 app.listen(app.get('port'), () =>{
-    console.log('Server Online on port 3000');
+    console.log(`Server online on port ${app.get('port')}`);
 })
