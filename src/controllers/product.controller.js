@@ -9,10 +9,22 @@ cloudinary.config({
 })
 
 productCtrl.getProducts = async (req, res) => {
-    let products = await Product.findAll();
+    let page = req.query.page || 1;
+    let limit = 5;
+    let offset = (page - 1) * limit
+    let products = await Product.findAll({
+        limit,
+        offset,
+        attributes: {exclude: ['status']},
+        order: [
+            ['createdAt', 'DESC']
+        ],
+        where: {status: 'ACTIVE'}
+    });
     res.json({
         ok: true,
-        products
+        page,
+        data: products
     });
 }
 
