@@ -36,8 +36,6 @@ productCtrl.getProducts = async (req, res) => {
 productCtrl.createProduct = async (req, res) => {
 
     let product = Product.build(req.body);
-    console.log(product)
-    console.log(req.files)
     try {
         let urls = [];
         for (let file of req.files){

@@ -7,10 +7,6 @@ module.exports = (connection, type) => {
        },
         name: type.STRING,
         price: type.INTEGER,
-        category: {
-           type: type.STRING,
-            allowNull: false,
-        },
         unit: type.STRING,
         images: type.ARRAY(type.STRING),
         status: {
