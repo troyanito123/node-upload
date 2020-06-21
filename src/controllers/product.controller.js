@@ -47,7 +47,7 @@ productCtrl.createProduct = async (req, res) => {
         let productdb = await product.save()
         res.json({
             ok: true,
-            product: productdb
+            data: productdb
         });
     }catch (e) {
         res.status(500).json({
