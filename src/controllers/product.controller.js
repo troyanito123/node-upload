@@ -10,16 +10,21 @@ cloudinary.config({
 
 productCtrl.getProducts = async (req, res) => {
     let page = req.query.page || 1;
+    let category = req.query.category;
     let limit = 5;
     let offset = (page - 1) * limit
+    let where = {status: 'ACTIVE'};
+    if (category) 
+        where = {status: 'ACTIVE', category}
+    console.log(where);
     let products = await Product.findAll({
         limit,
         offset,
+        where,
         attributes: {exclude: ['status']},
         order: [
             ['createdAt', 'DESC']
-        ],
-        where: {status: 'ACTIVE'}
+        ]
     });
     res.json({
         ok: true,
@@ -49,7 +54,7 @@ productCtrl.createProduct = async (req, res) => {
     }catch (e) {
         res.status(500).json({
             ok: false,
-            message: 'LLEGO PERO NO SE PUDO CREAR',
+            message: 'Fail saving product in data base',
             error: e
         })
     }
