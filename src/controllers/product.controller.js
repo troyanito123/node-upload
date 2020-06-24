@@ -19,7 +19,6 @@ productCtrl.getProducts = async (req, res) => {
         if (category)
             where = {status: 'ACTIVE', categoryId: category.id}
     }
-    console.log(where);
     let products = await Product.findAll({
         limit,
         offset,
