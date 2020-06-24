@@ -1,5 +1,5 @@
 const productCtrl = {};
-const { Product } = require('../database/database');
+const { Product, Category, Unit } = require('../database/database');
 const fs = require('fs-extra');
 const cloudinary = require('cloudinary');
 cloudinary.config({
@@ -10,12 +10,15 @@ cloudinary.config({
 
 productCtrl.getProducts = async (req, res) => {
     let page = req.query.page || 1;
-    let category = req.query.category;
+    let codeCategory = req.query.category;
     let limit = 5;
     let offset = (page - 1) * limit
     let where = {status: 'ACTIVE'};
-    if (category) 
-        where = {status: 'ACTIVE', category}
+    if (codeCategory){
+        let category = await Category.findOne({where: {code: codeCategory}});
+        if (category)
+            where = {status: 'ACTIVE', categoryId: category.id}
+    }
     console.log(where);
     let products = await Product.findAll({
         limit,
