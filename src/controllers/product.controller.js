@@ -23,6 +23,7 @@ productCtrl.getProducts = async (req, res) => {
         limit,
         offset,
         where,
+        include: [Category, Unit],
         attributes: {exclude: ['status']},
         order: [
             ['createdAt', 'DESC']
@@ -42,7 +43,7 @@ productCtrl.createProduct = async (req, res) => {
         let urls = [];
         for (let file of req.files){
             const result = await cloudinary.v2.uploader.upload(file.path);
-            urls.push(result.url);
+            urls.push(result.secure_url);
             await fs.unlink(file.path)
         }
         product.images = urls;
@@ -85,10 +86,18 @@ productCtrl.updateProduct = async (req, res) => {
 productCtrl.deleteProduct = async (req, res) => {
     let id = req.params.id
     let product = await Product.update({status: "DELETE"}, {where: {id}});
-    res.json({
-        ok: true,
-        product
-    });
+    if (product[0])
+        res.json({
+            ok: true,
+            message: 'Success'
+        });
+    else
+        res.json({
+            ok: false,
+            message: `The id ${id} dont match with any product from the database`
+        });
+
+
 }
 
 module.exports = productCtrl;
