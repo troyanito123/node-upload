@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const router = Router();
-const { createRole, getRoles, updateRole, getRole, deleteRole } = require('../controllers/Role.controller')
+const { createRole, getRoles, updateRole, getRole, deleteRole } = require('../controllers/role.controller')
 
 router.get('/', getRoles);
 router.post('/', createRole);
