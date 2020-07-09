@@ -1,5 +1,5 @@
 module.exports = (connection, type) => {
-    return connection.define('categories', {
+    return connection.define('roles', {
         id: {
             type: type.INTEGER,
             primaryKey: true,

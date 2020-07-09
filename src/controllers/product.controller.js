@@ -24,7 +24,7 @@ productCtrl.getProducts = async (req, res) => {
         offset,
         where,
         include: [Category, Unit],
-        attributes: {exclude: ['status']},
+        attributes: {exclude: ['status', 'categoryId', 'unitId']},
         order: [
             ['createdAt', 'DESC']
         ]

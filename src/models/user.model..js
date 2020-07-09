@@ -1,5 +1,5 @@
 module.exports = (connection, type) => {
-    return connection.define('categories', {
+    return connection.define('users', {
         id: {
             type: type.INTEGER,
             primaryKey: true,
@@ -9,14 +9,18 @@ module.exports = (connection, type) => {
             type: type.STRING,
             allowNull: false,
         },
-        code: {
+        email: {
             type: type.STRING,
             allowNull: false,
             unique: true
         },
-        description: {
+        password: {
             type: type.TEXT,
             allowNull: false
+        },
+        location: {
+            type: type.STRING,
+            defaultValue: '-17.442187,-66.1615182'
         }
     });
 }

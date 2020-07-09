@@ -1,11 +1,11 @@
 const { Router } = require('express');
 const router = Router();
-const { createUnit, getUnits, updateUnit, getUnit, deleteUnit } = require('../controllers/unit.controller')
+const { createRole, getRoles, updateRole, getRole, deleteRole } = require('../controllers/Role.controller')
 
-router.get('/', getUnits);
-router.post('/', createUnit);
-router.get('/:id', getUnit);
-router.put('/:id', updateUnit);
-router.delete('/:id', deleteUnit);
+router.get('/', getRoles);
+router.post('/', createRole);
+router.get('/:id', getRole);
+router.put('/:id', updateRole);
+router.delete('/:id', deleteRole);
 
 module.exports = router;

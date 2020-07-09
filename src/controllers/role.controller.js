@@ -1,12 +1,12 @@
-const UnitCtrl = {};
-const { Unit } = require('../database/database');
+const roleCtrl = {};
+const { Role } = require('../database/database');
 
-UnitCtrl.getUnits = async (req, res) => {
+roleCtrl.getRoles = async (req, res) => {
     try {
-        let units =  await Unit.findAll();
+        let roles =  await Role.findAll();
         res.json({
             ok: true,
-            data: units
+            data: roles
         });
     }catch (e) {
         res.status(500).json({
@@ -16,54 +16,59 @@ UnitCtrl.getUnits = async (req, res) => {
     }
 }
 
-UnitCtrl.createUnit = async (req, res) => {
+roleCtrl.createRole = async (req, res) => {
 
-    let unit = Unit.build(req.body);
+    let {name, code, description} = req.body;
+
+    let role = Role.build({name, code, description});
     try {
-        let unitDB = await unit.save()
+        let roleDB = await role.save()
         res.json({
             ok: true,
-            data: unitDB
+            data: roleDB
         });
     }catch (e) {
         res.status(500).json({
             ok: false,
-            message: 'Fail saving unit in data base',
+            message: 'Fail saving ROLE in data base',
             error: e
         })
     }
 }
-UnitCtrl.getUnit = async (req, res) => {
-    let unit = await Unit.findByPk(req.params.id);
+roleCtrl.getRole = async (req, res) => {
 
-    if (!unit)
+    let id = req.params.id
+    let role = await Role.findByPk(id);
+
+    if (!role)
         return res.json({
             ok: false,
-            message: `unit with id ${req.params.id} not exists`
+            message: `Role with id: ${id} not exists`
         });
 
     res.json({
         ok: true,
-        data: unit
+        data: role
     });
 }
 
-UnitCtrl.updateUnit = async (req, res) => {
+roleCtrl.updateRole = async (req, res) => {
     let id = req.params.id
-    let unit = await Unit.update(req.body, {where: {id}});
+    let {name, code, description} = req.body;
+    let role = await Role.update({name, code, description}, {where: {id}});
     res.json({
         ok: true,
-        data: unit
+        data: role
     });
 }
-UnitCtrl.deleteUnit = async (req, res) => {
+roleCtrl.deleteRole = async (req, res) => {
     let id = req.params.id
-    let unit = await Unit.delete({where: {id}});
+    let role = await Role.delete({where: {id}});
     res.json({
         ok: true,
-        data: unit
+        data: role
     });
 }
 
-module.exports = UnitCtrl;
+module.exports = roleCtrl;
 
